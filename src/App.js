@@ -12,31 +12,26 @@ function App() {
 
   const submitForm = (e) => {
     e.preventDefault();
-    if (formObject.userId) {
-      setFormObjectList(
-        formObjectList.map((data) => {
-          if (data.userId === formObject.userId) {
-            return { ...data, ...formObject };
-          } else {
-            return data;
-          }
-        })
-      );
-      toast.success("Record Updated Successfully");
-      setFormObject({ gender: "Male" });
-    } else {
-      toast.success("Record Inserted Successfully");
-      setFormObjectList([...formObjectList, { ...formObject, userId: uuId() }]);
-      setFormObject({ gender: "Male" });
-    }
+    toast.success("Record Inserted Successfully");
+    setFormObjectList([...formObjectList, { ...formObject, userId: uuId() }]);
+    setFormObject({ gender: "Male" });
   };
 
   const onDeleteHandle = (id) => {
     setFormObjectList(formObjectList.filter((data) => data.userId !== id));
     toast.error("Record Deleted Successfully");
   };
-  const onUpdateHandle = (object) => {
-    setFormObject(object);
+  const onUpdateHandle = (updatedObject) => {
+    setFormObjectList(
+      formObjectList.map((data) => {
+        if (data.userId === updatedObject.userId) {
+          return { ...data, ...updatedObject };
+        } else {
+          return data;
+        }
+      })
+    );
+    toast.success("Record Updated Successfully");
   };
 
   return (
