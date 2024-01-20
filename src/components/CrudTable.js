@@ -8,10 +8,10 @@ const CrudTable = ({ data = [], onDelete, onUpdate }) => {
       <Table className="mb-0" striped size="sm" responsive bordered>
         <thead>
           <tr>
-            <th>#</th>
+            <th>S.No</th>
             <th>Name</th>
-            <th>Email</th>
             <th>Contact</th>
+            <th>Email</th>
             <th className="text-nowrap">Week Days</th>
             <th>Gender</th>
             <th className="text-nowrap">Date of Birth</th>
@@ -23,8 +23,8 @@ const CrudTable = ({ data = [], onDelete, onUpdate }) => {
             <tr>
               <td>{index + 1}</td>
               <td>{singleData.name || "-"}</td>
-              <td>{singleData.email || "-"}</td>
               <td>{singleData.contact || "-"}</td>
+              <td>{singleData.email || "-"}</td>
               <td>{singleData.weekDays?.join(",") || "-"}</td>
               <td>{singleData.gender || "-"}</td>
               <td>{singleData.dateOfBirth || "-"}</td>
@@ -45,6 +45,11 @@ const CrudTable = ({ data = [], onDelete, onUpdate }) => {
           ))}
         </tbody>
       </Table>
+      {data.length === 0 && (
+        <div className="text-center fs-5 fw-bold border p-1 text-white bg-secondary bg-gradient">
+          No Record Found
+        </div>
+      )}
     </div>
   );
 };

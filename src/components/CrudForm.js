@@ -3,13 +3,9 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-const CrudForm = ({ formObject, setFormObject, submitForm }) => {
+const CrudForm = ({ formObject, setFormObject, submitForm, onCancel }) => {
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const gender = ["Male", "Female"];
-
-  useEffect(() => {
-    console.log(formObject);
-  }, [formObject]);
 
   const changeValue = (e) => {
     const name = e.target.name;
@@ -48,18 +44,6 @@ const CrudForm = ({ formObject, setFormObject, submitForm }) => {
           />
         </Form.Group>
         <Form.Group as={Col} md="12" className="mb-2">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            required
-            size="sm"
-            type="email"
-            placeholder="Enter Email"
-            name="email"
-            value={formObject.email || ""}
-            onChange={changeValue}
-          />
-        </Form.Group>
-        <Form.Group as={Col} md="12" className="mb-2">
           <Form.Label>Contact</Form.Label>
           <Form.Control
             required
@@ -72,6 +56,18 @@ const CrudForm = ({ formObject, setFormObject, submitForm }) => {
           />
         </Form.Group>
         <Form.Group as={Col} md="12" className="mb-2">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            required
+            size="sm"
+            type="email"
+            placeholder="Enter Email"
+            name="email"
+            value={formObject.email || ""}
+            onChange={changeValue}
+          />
+        </Form.Group>
+        <Form.Group as={Col} md="12" className="mb-2">
           <Form.Label>Week Days</Form.Label>
           <div className="d-flex flex-wrap ">
             {daysOfWeek.map((day) => (
@@ -80,7 +76,7 @@ const CrudForm = ({ formObject, setFormObject, submitForm }) => {
                 type="checkbox"
                 label={day}
                 className="me-3"
-                checked={formObject.weekDays?.includes(day)}
+                checked={formObject.weekDays?.includes(day) || false}
                 onChange={() => checkChangeValue(day)}
               />
             ))}
@@ -116,7 +112,13 @@ const CrudForm = ({ formObject, setFormObject, submitForm }) => {
         <div className="col-md-12 ">
           <div className="text-end mt-2">
             {formObject.userId && (
-              <Button size="sm" type="reset" variant="danger" className="me-2">
+              <Button
+                size="sm"
+                type="reset"
+                variant="danger"
+                className="me-2"
+                onClick={onCancel}
+              >
                 Cancel
               </Button>
             )}
