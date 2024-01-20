@@ -1,8 +1,22 @@
-import React from "react";
-import { Table } from "react-bootstrap";
+import React, { useState } from "react";
+import { Modal, Table } from "react-bootstrap";
 import { BsPencilSquare, BsTrash3 } from "react-icons/bs";
+import CrudForm from "./CrudForm";
 
 const CrudTable = ({ data = [], onDelete, onUpdate }) => {
+  const [formObject, setFormObject] = useState({});
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  const updateForm = (e) => {
+    e.preventDefault();
+    onUpdate(formObject);
+    hideModal();
+  };
+
+  const hideModal = () => {
+    setShowUpdateModal(false);
+    setFormObject({ gender: "Male" });
+  };
   return (
     <div className="mt-3">
       <Table className="mb-0" striped size="sm" responsive bordered>
@@ -33,7 +47,10 @@ const CrudTable = ({ data = [], onDelete, onUpdate }) => {
                   title="Edit Record"
                   role="button"
                   className="me-2"
-                  onClick={() => onUpdate(singleData)}
+                  onClick={() => {
+                    setShowUpdateModal(true);
+                    setFormObject(singleData);
+                  }}
                 />
                 <BsTrash3
                   title="Delete Record"
@@ -50,6 +67,20 @@ const CrudTable = ({ data = [], onDelete, onUpdate }) => {
           No Record Found
         </div>
       )}
+
+      <Modal onHide={hideModal} show={showUpdateModal} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Update</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CrudForm
+            formObject={formObject}
+            setFormObject={setFormObject}
+            submitForm={updateForm}
+            onCancel={hideModal}
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
